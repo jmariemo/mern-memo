@@ -10,7 +10,7 @@ function Landing({ currentPage, handlePageChange }) {
           Anniversaries, birthdays...
         </p>
         <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-green">
-          memo 
+          testing 
           <br className="hidden lg:inline-block" /> helps you remember.
         </h1>
         <LearnMore
