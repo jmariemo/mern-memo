@@ -2,17 +2,16 @@ import Navbar from "./Navbar";
 
 function Header({ currentPage, handlePageChange }) {
   return (
-    <div>
-      <div className="flex flex-col md:flex-row sticky py-2 items-center md:justify-between bg-green font-sans text-white">
+      <div className="sticky top-0 z-10 flex flex-col md:flex-row pt-2 pb-6 items-center md:justify-between bg-gradient-to-b from-green to-white text-white">
         <div className="flex flex-col items-center md:flex-row md:items-end">
           <a
             href="#landing"
-            className="text-2xl md:p-2"
+            className="text-2xl md:p-2 font-display"
             onClick={() => handlePageChange("Landing")}
           >
             memo
           </a>
-          <p className="text-lg md:border-l-2 md:p-2">don't forget!</p>
+          <p className="text-lg md:border-l-2 md:p-2 font-light">don't forget!</p>
         </div>
         <div>
           <Navbar
@@ -21,7 +20,6 @@ function Header({ currentPage, handlePageChange }) {
           />
         </div>
       </div>
-    </div>
   );
 }
 
