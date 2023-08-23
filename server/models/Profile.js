@@ -47,6 +47,6 @@ profileSchema.virtual('contacts').get(function () {
     return this.contactSchema.length;
 });
 
-const Profile = model('User', profileSchema );
+const Profile = model('Profile', profileSchema );
 
 module.exports = Profile; 
