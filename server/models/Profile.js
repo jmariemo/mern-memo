@@ -39,12 +39,12 @@ profileSchema.pre('save', async function (next) {
     next();
 });
 
-userSchema.methods.isCorrectPassword = async function (password) {
+profileSchema.methods.isCorrectPassword = async function (password) {
     return bcrypt.compare(password, this.password);
 };
 
-userSchema.virtual('bookCount').get(function () {
-    return this.savedBooks.length;
+profileSchema.virtual('contacts').get(function () {
+    return this.contactSchema.length;
 });
 
 const Profile = model('User', profileSchema );
