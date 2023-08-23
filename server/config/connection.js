@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGOB_URI || 'mongodb://localhost/googlebooks', {
+mongoose.connect(process.env.MONGOB_URI || 'mongodb://localhost/memo', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
