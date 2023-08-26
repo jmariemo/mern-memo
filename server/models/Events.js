@@ -1,7 +1,7 @@
 const mongoose = require ('mongoose');
 const { Schema } = mongoose; 
 
-const eventSchema = new Schema({
+const memoSchema = new Schema({
     // the contact card
     contact: {
         type: String, 
