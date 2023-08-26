@@ -26,19 +26,19 @@ input savedContacts {
 }
 
 type Query {
-    me: User
+    me: Contact
 }
 
 type Mutation {
     login(email: String!, password: String!): Auth
     addMemo(contact: String!, event: String!, password: String!): Auth
-    saveContact(input savedContacts!): User
+    saveContact(input: savedContacts!): Contact
 }
 
 type Auth {
     token: ID!
-    user: User
- }
+    user: Contact
+}
 `;
 
 //export typeDefs
