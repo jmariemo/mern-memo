@@ -1,8 +1,8 @@
-import MonthSection from "./MonthSection";
-import ContactSection from "./ContactSection";
-import GreetingSection from "./GreetingSection";
+import MonthSection from "../components/Profile/MonthSection";
+import ContactSection from "../components/Profile/ContactSection";
+import GreetingSection from "../components/Profile/GreetingSection";
 
-function Profile({ currentPage, handlePageChange }) {
+function UserProfile() {
   return (
     <section id="profile">
       <div className="container flex flex-col md:flex-row px-10 py-20 mx-auto">
@@ -16,4 +16,4 @@ function Profile({ currentPage, handlePageChange }) {
   );
 }
 
-export default Profile;
+export default UserProfile;

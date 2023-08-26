@@ -1,46 +1,40 @@
 // import "./App.css";
-import React, { useState } from "react";
-import Header from "./components/Navbar/Header";
-import SignUp from "./components/SignUp/SignUp";
-import Login from "./components/Login/Login";
-import LearnMore from "./components/LearnMore";
-import Landing from "./components/Landing";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from "./components/Navbar";
+import Landing from "./pages/Landing";
+import UserProfile from "./pages/UserProfile";
+import ContactCards from "./pages/ContactCardsModal";
 import Footer from "./components/Footer/Footer";
-import Profile from "./components/Profile/Profile";
+
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("Landing");
-
-  // This method is checking to see what the value of `currentPage` is. Depending on the value of currentPage, we return the corresponding component to render.
-  const renderPage = () => {
-    if (currentPage === "LearnMore") {
-      return <LearnMore />;
-    }
-    if (currentPage === "SignUp") {
-      return <SignUp currentPage={currentPage} handlePageChange={handlePageChange} />;
-    }
-    if (currentPage === "Login") {
-      return <Login currentPage={currentPage} handlePageChange={handlePageChange} />;
-    }
-    if (currentPage === "Profile") {
-      return <Profile currentPage={currentPage} handlePageChange={handlePageChange} />;
-    }
-    return (
-      <Landing currentPage={currentPage} handlePageChange={handlePageChange} />
-    );
-  };
-
-  const handlePageChange = (page) => setCurrentPage(page);
 
   return (
-    <div>
-      <div className="min-h-full">
-        <Header currentPage={currentPage} handlePageChange={handlePageChange} />
-        {renderPage()}
-      </div>
-
+    <Router>
+    <>
+      <Navbar />
+      <Routes>
+        <Route 
+          path='/' 
+          element={<Landing />} 
+        />
+        <Route 
+          path='/profile' 
+          element={<UserProfile />} 
+        />
+        <Route 
+          path='/contacts' 
+          element={<ContactCards />} 
+        />
+        <Route 
+          path='*'
+          element={<h1>Sorry, nothing to see here!</h1>}
+        />
+      </Routes>
       <Footer />
-    </div>
+    </>
+  </Router>
   );
 }
 
