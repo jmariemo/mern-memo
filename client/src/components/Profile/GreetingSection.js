@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ContactCreateModal from "./contactCreateModal";
 
-function GreetingSection({ currentPage, handlePageChange }) {
+function GreetingSection() {
   const [show, setShow] = useState(false);
 
   return (
