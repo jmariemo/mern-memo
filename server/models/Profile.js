@@ -15,13 +15,20 @@ const profileSchema = new Schema({
         type: String,
         required: true,
     },
-    firstname: {
+    userName: {
         type: String,
+        required: true,
     },
-    lastname: {
-        type: String,
+    zipCode: {
+      type: String,
+      required: true,
     },
-    savedContacts: [contactSchema],
+    savedContacts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Contacts'
+      }
+    ],
     },
     {
         toJSON: {
