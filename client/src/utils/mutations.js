@@ -1,10 +1,10 @@
 import { gql } from '@apollo/client';
 
-export const ADD_PROFILE = gql`
-  mutation addProfile($name: String!, $email: String!, $password: String!, $zipCode: String!) {
-    addProfile(name: $name, email: $email, password: $password, zipCode: $zipCode) {
+export const ADD_USER = gql`
+  mutation addUser($name: String!, $email: String!, $password: String!, $zipCode: String!) {
+    addUser(name: $name, email: $email, password: $password, zipCode: $zipCode) {
       token
-      profile {
+      User {
         _id
         name
         zipCode
@@ -15,8 +15,8 @@ export const ADD_PROFILE = gql`
 `;
 
 export const ADD_CONTACT = gql`
-  mutation addContact($profileId: ID!, $contact: String!) {
-    addContact(profileId: $profileId, contact: $contact) {
+  mutation addContact($UserId: ID!, $contact: String!) {
+    addContact(UserId: $UserId, contact: $contact) {
       _id
       name
       zipCode
@@ -28,8 +28,8 @@ export const ADD_CONTACT = gql`
 `;
 
 export const ADD_EVENT = gql`
-  mutation addEvent($profileId: ID!, $contact: String!) {
-    addContact(profileId: $profileId, contact: $contact) {
+  mutation addEvent($UserId: ID!, $contact: String!) {
+    addContact(UserId: $UserId, contact: $contact) {
       _id
       name
       contacts {
@@ -45,7 +45,7 @@ export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
-      profile {
+      User {
         _id
         name
       }
@@ -67,8 +67,8 @@ export const REMOVE_CONTACT = gql`
 `;
 
 export const REMOVE_EVENT = gql`
-  mutation removeEvent($profileId: ID!, $contact: String!) {
-    removeContact(profileId: $profileId, contact: $contact) {
+  mutation removeEvent($UserId: ID!, $contact: String!) {
+    removeContact(UserId: $UserId, contact: $contact) {
       _id
       name
       zipCode
@@ -81,9 +81,9 @@ export const REMOVE_EVENT = gql`
   }
 `;
 
-export const REMOVE_PROFILE = gql`
-  mutation removeProfile($name: String!, $email: String!, $password: String!, $zipCode: String!) {
-    removeProfile(name: $name, email: $email, password: $password, zipCode: $zipCode) {
+export const REMOVE_User = gql`
+  mutation removeUser($name: String!, $email: String!, $password: String!, $zipCode: String!) {
+    removeUser(name: $name, email: $email, password: $password, zipCode: $zipCode) {
       token
       profile {
         _id
