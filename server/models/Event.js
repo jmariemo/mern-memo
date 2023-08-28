@@ -1,24 +1,22 @@
 const mongoose = require ('mongoose');
-const { Schema, model } = require('mongoose'); 
+const { Schema, model } = mongoose; 
+const contactSchema = require("./Contact")
 
 
 const eventSchema = new Schema({
   // the contact card
-  contact: {
-      type: Schema.Types.ObjectId, 
-      ref: 'Contact'
-  },
+  contact: [contactSchema],
   // name of event
   eventName: {
       type: String,
       required: true, 
   }, 
   date: {
-      type: String, 
+      type: Date, 
       required: true,
   },
 });
 
-const Events = model('Events', eventSchema );
+const Event = model('Event', eventSchema );
 
-module.exports = eventSchema;
+module.exports = Event;
