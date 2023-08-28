@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema, model } = require('mongoose');
-const eventSchema = require('./Events');
+const eventSchema = require('./Event');
 
 const contactSchema = new Schema({
   // Profile that the contact belongs to
