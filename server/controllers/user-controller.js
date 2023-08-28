@@ -1,10 +1,10 @@
-// import Profile model
-const { Profile } = require('../models');
+// import user model
+const { User } = require('../models');
 // import sign token function from auth
 const { signToken } = require('../utils/auth');
   
 module.exports = {
-    // pulling a contact through the profile by first name or last name
+    // pulling a contact through the user by first name or last name
     async getContact({ user = null, params }, res) {
         const foundUser = await User.findOne({
             $or: [{ _id: user ? user.id : params.id }, { username: params.username }],

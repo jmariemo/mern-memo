@@ -1,12 +1,13 @@
 const { gql } = require('apollo-server-express');
+// scalar Date
 
 const typeDefs = gql`
 
 type User {
     _id: ID!
-    username: String!
-    email: String!
+    userName: String!
     zipCode: Int!
+    email: String!
     contactCount: Int
     savedContacts: [Contact]
 }
@@ -21,31 +22,42 @@ type Contact {
 }
 
 type Event {
-    contact: [Contact]
+    contact: Contact
     eventName: String!
-    date: String
+    eventDate: String!
+}
+
+type Auth {
+    token: ID!
+    user: User
 }
 
 type Query {
     me: User
 }
 
-input savedContacts {
-    firstName: String
-    lastName: String
-    zipCode: String
-    events: [String]
+input ContactDataInput {
+    contactId: ID!
+    firstName: String!
+    lastName: String!
+    zipCode: Int!
+    eventCount: Int
+    savedEvents: [String]
+}
+
+input EventDataInput {
+    contact: [String]
+    eventName: String!
+    eventDate: String!
 }
 
 type Mutation {
     login(email: String!, password: String!): Auth
-    addMemo(contact: String!, event: String!, password: String!): Auth
-    saveContact(input: savedContacts!): Contact
-}
-
-type Auth {
-    token: ID!
-    user: Contact
+    addUser(userName: String!, zipCode: Int!, email: String!, password: String!): Auth
+    addContact(input: ContactDataInput): User
+    removeContact(contactId: ID!): User
+    addEvent(input: EventDataInput): Contact
+    removeEvent(eventId: ID!): Contact
 }
 `;
 

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 
-import { createUser } from "../utils/API";
+import { useMutation } from "@apollo/client";
+import { ADD_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
 
 const SignUpForm = (props) => {
   // set initial form state
   const [userFormData, setUserFormData] = useState({
-    username: "",
-    zipcode: "",
+    userName: "",
+    zipCode: [],
     email: "",
     password: "",
   });
@@ -16,14 +17,16 @@ const SignUpForm = (props) => {
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
-  if (!props.show) {
-    return null;
-  }
+  const [addUser, { error }] = useMutation(ADD_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
   };
+
+  if (!props.show) {
+    return null;
+  }
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -36,41 +39,45 @@ const SignUpForm = (props) => {
     }
 
     try {
-      const response = await createUser(userFormData);
+      const response = await addUser({
+        variables: { ...userFormData },
+      });
 
       if (!response.ok) {
-        throw new Error("Hmm, something's not quite right. Please try to sign up again");
+        throw new Error(
+          "Hmm, something's not quite right. Please try to sign up again!"
+        );
       }
 
-      const { token, user } = await response.json();
-      console.log(user);
-      Auth.login(token);
+      // const { token, user } = await response.json();
+      console.log(response.data.addUser.token);
+      Auth.login(response.data.addUser.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
     }
 
     setUserFormData({
-      username: "",
-      zipcode: "",
+      userName: "",
+      zipCode: [],
       email: "",
       password: "",
     });
   };
 
   return (
-    <section
+    <form
       className="flex fixed left-0 right-0 top-0 mt-20 bottom-0 items-center justify-center bg-gradient-to-b from-white to-green/40"
       noValidate
-      validated={validated}
+      validated={"false"}
       onSubmit={handleFormSubmit}
       onClick={props.onClose}
     >
-      {/* <div dismissible onClose={() => setShowAlert(false)} show={showAlert}>
-        Hmm, something's not quite right. Please try to sign up again.
-      </div> */}
       <div class="flex flex-col">
-        <div class="container max-w-sm mx-auto mt-2 md:mt-10 mb-10 flex-1 flex flex-col items-center justify-center px-2" onClick={e => e.stopPropagation()}>
+        <div
+          class="container max-w-sm mx-auto mt-2 md:mt-10 mb-10 flex-1 flex flex-col items-center justify-center px-2"
+          onClick={(e) => e.stopPropagation()}
+        >
           <div class="px-6 py-8 rounded shadow-md shadow-sage text-black w-full bg-white">
             <h1 htmlFor="username" class="mb-8 text-3xl text-center text-sage">
               Sign Up
@@ -78,18 +85,18 @@ const SignUpForm = (props) => {
             <input
               type="text"
               placeholder="Username"
-              name="username"
+              name="userName"
               onChange={handleInputChange}
-              value={userFormData.username}
+              value={userFormData.userName}
               required
               class="block border border-sage w-full p-3 rounded mb-4"
             />
             <input
-              type="text"
+              type="number"
               placeholder="Zip Code"
-              name="zipcode"
+              name="zipCode"
               onChange={handleInputChange}
-              value={userFormData.zipcode}
+              value={userFormData.zipCode}
               required
               class="block border border-sage w-full p-3 rounded mb-4"
             />
@@ -114,8 +121,8 @@ const SignUpForm = (props) => {
             <button
               disabled={
                 !(
-                  userFormData.username &&
-                  userFormData.zipcode &&
+                  userFormData.userName &&
+                  userFormData.zipCode &&
                   userFormData.email &&
                   userFormData.password
                 )
@@ -128,8 +135,9 @@ const SignUpForm = (props) => {
           </div>
         </div>
       </div>
-    </section>
+    </form>
   );
-}
+};
 
 export default SignUpForm;
+
