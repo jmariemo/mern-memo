@@ -1,30 +1,35 @@
-const mongoose = require("mongoose");
-const { Schema, model } = mongoose;
-const eventSchema = require("./Event");
+const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
+const eventSchema = require('./Events');
 
 const contactSchema = new Schema({
   // Profile that the contact belongs to
   profile: {
     type: Schema.Types.ObjectId,
-    ref: "Profile",
+    ref: 'Profile',
   },
   // Name of Contact
   firstName: {
-    type: String,
-    required: true,
+      type: String,
   },
   lastName: {
-    type: String,
-    required: true,
+      type: String,
   },
   zipCode: {
-    type: Number,
-    required: true,
-    required: true,
+      type: String, 
+      required: true, 
   },
-  events: [eventSchema],
-});
+  transitTime: {
+      type: String,  
+  },
+  events: [
+    {
+    type: Schema.Types.ObjectId,
+    ref: 'Events'
+    }
+]
+  });
 
-const Contact = model("Contact", contactSchema);
+const Contact = model('Contacts', contactSchema );
 
-module.exports = Contact;
+module.exports = Contact

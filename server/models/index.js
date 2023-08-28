@@ -1,6 +1,6 @@
 const Profile = require('./Profile');
 const Contact = require('./Contact');
-const Event = require('./Event');
+const Events = require('./Events');
 const Login = require('./Login');
 
-module.exports = { Profile, Contact, Event, Login };
+module.exports = { Profile, Contact, Events, Login };
