@@ -30,7 +30,6 @@ const SignUpForm = (props) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
     if (form.checkValidity() === "false") {
       event.preventDefault();
@@ -48,8 +47,6 @@ const SignUpForm = (props) => {
         );
       }
 
-      // const { token, user } = await response.json();
-      console.log(response.data.addUser.token);
       Auth.login(response.data.addUser.token);
     } catch (err) {
       console.error(err);

@@ -5,44 +5,43 @@ import { LOGIN_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
 
 const LoginForm = (props) => {
+
   const [userFormData, setUserFormData] = useState({
     email: "",
     password: "",
   });
+
   // set state for form validation
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
   const [loginUser, { error }] = useMutation(LOGIN_USER);
-  if (!props.show) {
-    return null;
-  }
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
   };
 
+  if (!props.show) {
+    return null;
+  }
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     const form = event.currentTarget;
-    if (form.checkValidity() === false) {
+    if (form.checkValidity() === "false") {
       event.preventDefault();
       event.stopPropagation();
     }
 
     try {
-      const response = await loginUser(userFormData);
+      const response = await loginUser({
+        variables: { ...userFormData },
+      });
 
-      if (!response.ok) {
-        throw new Error("something went wrong!");
-      }
-
-      const { token, user } = await response.json();
-      console.log(user);
-      Auth.login(token);
+      Auth.login(response.data.loginUser.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
@@ -55,16 +54,14 @@ const LoginForm = (props) => {
   };
 
   return (
-    <section
+    <form
       className="flex fixed left-0 right-0 top-0 mt-20 bottom-0 items-center justify-center bg-gradient-to-b from-white to-green/40"
       noValidate
-      validated={validated}
+      validated={"false"}
       onSubmit={handleFormSubmit}
       onClick={props.onClose}
     >
-      {/* <div onClose={() => setShowAlert(false)} show={showAlert}>
-        Hmm, something's not quite right. Please try to sign up again
-      </div> */}
+
       <div className="flex flex-col">
         <div
           className="container max-w-sm mx-auto mt-2 md:mt-10 mb-10 flex-1 flex flex-col items-center justify-center px-2"
@@ -84,7 +81,7 @@ const LoginForm = (props) => {
               className="block border border-sage w-full p-3 rounded mb-4"
             />
             <input
-              type="text"
+              type="password"
               placeholder="Password"
               name="password"
               onChange={handleInputChange}
@@ -95,7 +92,6 @@ const LoginForm = (props) => {
             <button
               type="submit"
               disabled={!(userFormData.email && userFormData.password)}
-              onClick={props.onClose}
               className="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
             >
               Login
@@ -103,7 +99,7 @@ const LoginForm = (props) => {
           </div>
         </div>
       </div>
-    </section>
+    </form>
   );
 };
 
