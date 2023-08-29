@@ -52,7 +52,7 @@ input EventDataInput {
 }
 
 type Mutation {
-    login(email: String!, password: String!): Auth
+    loginUser(email: String!, password: String!): Auth
     addUser(userName: String!, zipCode: String!, email: String!, password: String!): Auth
     addContact(input: ContactDataInput): User
     removeContact(contactId: ID!): User

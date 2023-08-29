@@ -12,7 +12,7 @@ class AuthService {
   loggedIn() {
     // Checks if there is a saved token and if token is still valid
     const token = this.getToken();
-    return !!token && !this.isTokenExpired(token); // handwaiving here
+    return !!token && !this.isTokenExpired(token);
   }
 
   // check if token is expired
@@ -32,9 +32,9 @@ class AuthService {
     return localStorage.getItem('id_token');
   }
 
-  login(idToken) {
+  login(token) {
     // Saves user token to localStorage
-    localStorage.setItem('id_token', idToken);
+    localStorage.setItem('id_token', token);
     window.location.assign('/profile');
   }
 

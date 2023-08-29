@@ -26,7 +26,7 @@ const AppNavbar = () => {
             {Auth.loggedIn() ? (
               <>
                 <button
-                  className="bg-sage hover:bg-white text-white hover:text-sage hover:border hover:border-sage font-light py-1 px-3 m-3 rounded shadow-md"
+                  className="bg-sage hover:bg-white text-white hover:text-sage border-sage font-light py-1 px-3 m-3 rounded shadow-md"
                   onClick={Auth.logout}
                 >
                   Logout
@@ -35,13 +35,13 @@ const AppNavbar = () => {
             ) : (
               <div>
                 <button
-                  className="bg-sage hover:bg-white text-white hover:text-sage hover:border hover:border-sage font-light py-1 px-3 m-3 rounded shadow-md"
+                  className="bg-sage hover:bg-white text-white hover:text-sage border-sage font-light py-1 px-3 m-3 rounded shadow-md"
                   onClick={() => setShowLogin(true)}
                 >
                   Login
                 </button>
                 <button
-                  className="bg-sage hover:bg-white text-white hover:text-sage hover:border hover:border-sage font-light py-1 px-3 m-3 rounded shadow-md"
+                  className="bg-sage hover:bg-white text-white hover:text-sage border-sage font-light py-1 px-3 m-3 rounded shadow-md"
                   onClick={() => setShowSignup(true)}
                 >
                   Sign Up
