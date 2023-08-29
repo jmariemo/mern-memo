@@ -2,7 +2,8 @@ import { footerData } from "./footerData";
 
 function Footer() {
   return (
-      <div className="bottom-0 flex flex-col md:flex-row p-3 text-center md:justify-end text-white bottom-0 bg-green">
+    <div className="sticky bottm-0 text-white bg-green">
+      <div className="flex flex-col md:flex-row p-3 text-center md:justify-end ">
         <div className="font-display text-md">scheduleSquad 2023</div>
         <div className="flex flex-col mt-2 md:mt-0">
           {footerData.map((teammate) => (
@@ -17,6 +18,7 @@ function Footer() {
             </div>
           ))}
         </div>
+      </div>
       </div>
   );
 }

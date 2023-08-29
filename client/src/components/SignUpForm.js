@@ -8,7 +8,7 @@ const SignUpForm = (props) => {
   // set initial form state
   const [userFormData, setUserFormData] = useState({
     userName: "",
-    zipCode: [],
+    zipCode: "",
     email: "",
     password: "",
   });
@@ -33,7 +33,7 @@ const SignUpForm = (props) => {
 
     // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
-    if (form.checkValidity() === false) {
+    if (form.checkValidity() === "false") {
       event.preventDefault();
       event.stopPropagation();
     }
@@ -43,7 +43,7 @@ const SignUpForm = (props) => {
         variables: { ...userFormData },
       });
 
-      if (!response.ok) {
+      if (!response.data) {
         throw new Error(
           "Hmm, something's not quite right. Please try to sign up again!"
         );
@@ -59,11 +59,13 @@ const SignUpForm = (props) => {
 
     setUserFormData({
       userName: "",
-      zipCode: [],
+      zipCode: "",
       email: "",
       password: "",
     });
   };
+
+  
 
   return (
     <form
@@ -92,7 +94,7 @@ const SignUpForm = (props) => {
               class="block border border-sage w-full p-3 rounded mb-4"
             />
             <input
-              type="number"
+              type="text"
               placeholder="Zip Code"
               name="zipCode"
               onChange={handleInputChange}

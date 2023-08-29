@@ -6,7 +6,7 @@ const typeDefs = gql`
 type User {
     _id: ID!
     userName: String!
-    zipCode: Int!
+    zipCode: String!
     email: String!
     contactCount: Int
     savedContacts: [Contact]
@@ -53,7 +53,7 @@ input EventDataInput {
 
 type Mutation {
     login(email: String!, password: String!): Auth
-    addUser(userName: String!, zipCode: Int!, email: String!, password: String!): Auth
+    addUser(userName: String!, zipCode: String!, email: String!, password: String!): Auth
     addContact(input: ContactDataInput): User
     removeContact(contactId: ID!): User
     addEvent(input: EventDataInput): Contact

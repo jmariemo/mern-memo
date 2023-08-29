@@ -2,6 +2,7 @@
   "name": "react-portfolio",
   "version": "1.0.0",
   "private": true,
+  "proxy": "http://localhost:3001/",
   "dependencies": {
     "@apollo/client": "^3.8.1",
     "@headlessui/react": "^1.7.17",
