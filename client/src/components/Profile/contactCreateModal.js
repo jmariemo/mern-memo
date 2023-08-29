@@ -65,7 +65,7 @@ const ContactCreateModal = (props) => {
       noValidate
       validated={"false"}
       onSubmit={handleFormSubmit}
-      onClick={props.onClose}
+      // onClick={props.onClose}
     >
       <div className="flex fixed left-0 right-0 top-0 mt-20 bottom-0 items-center justify-center bg-green/20">
         <div className="w-50 bg-white rounded">
