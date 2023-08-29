@@ -6,10 +6,6 @@ import Auth from "../utils/auth";
 
 const LoginForm = (props) => {
 
-  if (!props.show) {
-    return null;
-  }
-
   const [userFormData, setUserFormData] = useState({
     email: "",
     password: "",
@@ -27,6 +23,10 @@ const LoginForm = (props) => {
     setUserFormData({ ...userFormData, [name]: value });
   };
 
+  if (!props.show) {
+    return null;
+  }
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -37,15 +37,11 @@ const LoginForm = (props) => {
     }
 
     try {
-      const response = await loginUser(userFormData);
+      const response = await loginUser({
+        variables: { ...userFormData },
+      });
 
-      if (!response.data) {
-        throw new Error("something went wrong!");
-      }
-
-      const { token, user } = await response.json();
-      console.log(user);
-      Auth.login(token);
+      Auth.login(response.data.loginUser.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
@@ -58,7 +54,7 @@ const LoginForm = (props) => {
   };
 
   return (
-    <section
+    <form
       className="flex fixed left-0 right-0 top-0 mt-20 bottom-0 items-center justify-center bg-gradient-to-b from-white to-green/40"
       noValidate
       validated={"false"}
@@ -85,7 +81,7 @@ const LoginForm = (props) => {
               className="block border border-sage w-full p-3 rounded mb-4"
             />
             <input
-              type="text"
+              type="password"
               placeholder="Password"
               name="password"
               onChange={handleInputChange}
@@ -96,7 +92,6 @@ const LoginForm = (props) => {
             <button
               type="submit"
               disabled={!(userFormData.email && userFormData.password)}
-              onClick={props.onClose}
               className="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
             >
               Login
@@ -104,7 +99,7 @@ const LoginForm = (props) => {
           </div>
         </div>
       </div>
-    </section>
+    </form>
   );
 };
 

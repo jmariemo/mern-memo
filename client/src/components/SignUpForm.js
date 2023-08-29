@@ -48,8 +48,6 @@ const SignUpForm = (props) => {
         );
       }
 
-      // const { token, user } = await response.json();
-      console.log(response.data.addUser.token);
       Auth.login(response.data.addUser.token);
     } catch (err) {
       console.error(err);
