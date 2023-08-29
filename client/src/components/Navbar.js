@@ -13,7 +13,7 @@ const AppNavbar = () => {
     <>
       <div className="sticky top-0 z-10 flex flex-col md:flex-row pt-2 pb-6 items-center md:justify-between bg-gradient-to-b from-green to-white text-white">
         <div className="flex flex-col items-center md:flex-row md:items-end">
-          <a className="text-2xl md:p-2 font-display" as={Link} to="/">
+          <a className="text-2xl md:p-2 font-display" href="/">
             memo
           </a>
           <p className="text-lg md:border-l-2 md:p-2 font-light">
