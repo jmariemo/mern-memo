@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 // set token secret and expiration date
-const secret = "mysecretsshhhhh";
+const secret = "secret2023";
 const expiration = "2h";
 
 module.exports = {
@@ -16,7 +16,7 @@ module.exports = {
     };
 
     if (!token) {
-      return req;
+      return;
     };
 
     // verify token and get user data out of it
@@ -30,8 +30,8 @@ module.exports = {
     // send to next endpoint
     return req;
   },
-  signToken: function ({ username, email, _id }) {
-    const payload = { username, email, _id };
+  signToken: function ({ userName, zipCode, email, _id }) {
+    const payload = { userName, zipCode, email, _id };
 
     return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
   },

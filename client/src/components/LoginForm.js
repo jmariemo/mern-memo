@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 
-import { loginUser } from "../utils/API";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
 
 const LoginForm = (props) => {
-  const [userFormData, setUserFormData] = useState({ email: "", password: "" });
+  const [userFormData, setUserFormData] = useState({
+    email: "",
+    password: "",
+  });
+  // set state for form validation
   const [validated] = useState(false);
+  // set state for alert
   const [showAlert, setShowAlert] = useState(false);
-  
+
+  const [loginUser, { error }] = useMutation(LOGIN_USER);
   if (!props.show) {
     return null;
   }
@@ -42,8 +49,6 @@ const LoginForm = (props) => {
     }
 
     setUserFormData({
-      username: "",
-      zipcode: "",
       email: "",
       password: "",
     });
@@ -60,10 +65,13 @@ const LoginForm = (props) => {
       {/* <div onClose={() => setShowAlert(false)} show={showAlert}>
         Hmm, something's not quite right. Please try to sign up again
       </div> */}
-      <div class="flex flex-col">
-        <div class="container max-w-sm mx-auto mt-2 md:mt-10 mb-10 flex-1 flex flex-col items-center justify-center px-2" onClick={e => e.stopPropagation()}>
-          <div class="px-6 py-8 rounded shadow-md shadow-sage text-black w-full bg-white">
-            <h1 htmlFor="email" class="mb-8 text-3xl text-center text-sage">
+      <div className="flex flex-col">
+        <div
+          className="container max-w-sm mx-auto mt-2 md:mt-10 mb-10 flex-1 flex flex-col items-center justify-center px-2"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="px-6 py-8 rounded shadow-md shadow-sage text-black w-full bg-white">
+            <h1 htmlFor="email" className="mb-8 text-3xl text-center text-sage">
               Login
             </h1>
             <input
@@ -73,7 +81,7 @@ const LoginForm = (props) => {
               onChange={handleInputChange}
               value={userFormData.email}
               required
-              class="block border border-sage w-full p-3 rounded mb-4"
+              className="block border border-sage w-full p-3 rounded mb-4"
             />
             <input
               type="text"
@@ -82,7 +90,7 @@ const LoginForm = (props) => {
               onChange={handleInputChange}
               value={userFormData.password}
               required
-              class="block border border-sage w-full p-3 rounded mb-4"
+              className="block border border-sage w-full p-3 rounded mb-4"
             />
             <button
               type="submit"

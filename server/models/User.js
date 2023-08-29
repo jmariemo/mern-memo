@@ -1,13 +1,16 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
+const { Schema, model } = mongoose;
 const bcrypt = require("bcrypt");
-
-// import schema from Contact.js
-const contactSchema = require("./Contact");
+const Contact = require("./Contact");
 
 const userSchema = new Schema(
   {
     userName: {
       type: String,
+      required: true,
+    },
+    zipCode: {
+      type: Number,
       required: true,
     },
     email: {
@@ -16,15 +19,11 @@ const userSchema = new Schema(
       unique: true,
       match: [/.+@.+\..+/, "Must use a valid email address"],
     },
-    zipCode: {
-      type: Number,
-      required: true,
-    },
     password: {
       type: String,
       required: true,
     },
-    savedContacts: [contactSchema],
+    savedContacts: [Contact.schema],
   },
   {
     toJSON: {
@@ -47,9 +46,9 @@ userSchema.methods.isCorrectPassword = async function (password) {
 };
 
 userSchema.virtual("contactCount").get(function () {
-  return this.savedContacts.length;
+  return this.contacts.length;
 });
 
-const User = model("User", userSchema);
+const User = model("User", userSchema)
 
 module.exports = User;
