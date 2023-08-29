@@ -5,19 +5,22 @@ import { LOGIN_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
 
 const LoginForm = (props) => {
+
+  if (!props.show) {
+    return null;
+  }
+
   const [userFormData, setUserFormData] = useState({
     email: "",
     password: "",
   });
+
   // set state for form validation
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
   const [loginUser, { error }] = useMutation(LOGIN_USER);
-  if (!props.show) {
-    return null;
-  }
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -28,7 +31,7 @@ const LoginForm = (props) => {
     event.preventDefault();
 
     const form = event.currentTarget;
-    if (form.checkValidity() === false) {
+    if (form.checkValidity() === "false") {
       event.preventDefault();
       event.stopPropagation();
     }
@@ -36,7 +39,7 @@ const LoginForm = (props) => {
     try {
       const response = await loginUser(userFormData);
 
-      if (!response.ok) {
+      if (!response.data) {
         throw new Error("something went wrong!");
       }
 
@@ -58,13 +61,11 @@ const LoginForm = (props) => {
     <section
       className="flex fixed left-0 right-0 top-0 mt-20 bottom-0 items-center justify-center bg-gradient-to-b from-white to-green/40"
       noValidate
-      validated={validated}
+      validated={"false"}
       onSubmit={handleFormSubmit}
       onClick={props.onClose}
     >
-      {/* <div onClose={() => setShowAlert(false)} show={showAlert}>
-        Hmm, something's not quite right. Please try to sign up again
-      </div> */}
+
       <div className="flex flex-col">
         <div
           className="container max-w-sm mx-auto mt-2 md:mt-10 mb-10 flex-1 flex flex-col items-center justify-center px-2"
