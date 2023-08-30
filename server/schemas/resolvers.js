@@ -52,8 +52,12 @@ const resolvers = {
       token = signToken(user);
       return { token, user };
     },
-    addContact: async (parent, {}) => {
+    addContact: async (parent, args) => {
       const contact = await Contact.create();
+      console.log("args", args);
+      console.log("contact", contact);
+
+      return { token, user };
     },
     removeContact: async (parent, {}) => {},
     addEvent: async (parent, {}) => {

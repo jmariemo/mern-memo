@@ -2,6 +2,9 @@ import Auth from "../utils/auth";
 import MonthSection from "../components/Profile/MonthSection";
 import ContactSection from "../components/Profile/ContactSection";
 import GreetingSection from "../components/Profile/GreetingSection";
+import ContactCreateModal from "../components/Profile/contactCreateModal";
+
+
 
 function UserProfile() {
   if (Auth.loggedIn()) {
