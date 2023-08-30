@@ -14,10 +14,11 @@ type User {
 
 type Contact {
     contactId: ID!
-    fullName: String!
-    zipCode: String!
-    eventTitle: String!
-    eventDate: String!
+    firstName: String!
+    lastName: String!
+    zipCode: Int!
+    eventCount: Int
+    savedEvents: [Event]
 }
 
 type Event {
@@ -36,11 +37,12 @@ type Query {
 }
 
 input ContactDataInput {
-  contactId: ID!
-  fullName: String!
-  zipCode: String!
-  eventTitle: String!
-  eventDate: String!
+    contactId: ID!
+    firstName: String!
+    lastName: String!
+    zipCode: Int!
+    eventCount: Int
+    savedEvents: [String]
 }
 
 input EventDataInput {
