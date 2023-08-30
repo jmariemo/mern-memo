@@ -1,5 +1,5 @@
 // import user model
-const { User } = require('../models');
+const { User, Contact } = require('../models');
 // import sign token function from auth
 const { signToken } = require('../utils/auth');
   
@@ -16,20 +16,19 @@ module.exports = {
 
         res.json(foundUser);
     },
-    // create an event, sign a token, and send it back to (client/src/components/SignUpForm.js)
+    // create a contact and send it back to (client/src/components/SignUpForm.js)
     async createContact({ body }, res ) {
-        const user = await User.create(body);
+        const contact = await Contact.create(body);
 
         if (!user) {
             return res.status (400). json({ message: 'Something went wrong!'});
         }
-        const token = signToken(user);
-        res.json({ token, user });
+        res.json({ contact });
     },
     // login the user, sign a token, send it back (to client/src/components/LoginForm.js)
     // {body} is destructured req.body
 
-    async login({ body }, rest ) {
+    async login({ body }, res ) {
         const user = await User.findOne({ $or: [{ username: body.username }, { email: body.email }] });
         if (!user) {
             return res.status(400). json({ message: "Can't find this contact" });

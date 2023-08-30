@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_CONTACT } from "../../utils/mutations";
+// import Auth from "../utils/auth";
 
 const ContactCreateModal = (props) => {
   // set initial form state
@@ -46,6 +47,8 @@ const ContactCreateModal = (props) => {
           "Hmm, something's not quite right. Please try to create contact again!"
         );
       };
+
+      // Auth.login(response.data.addUser.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
@@ -78,12 +81,18 @@ const ContactCreateModal = (props) => {
               class="block border border-sage w-full p-3 rounded mb-4"
               name="fullName"
               placeholder="Full Name"
+              onChange={handleInputChange}
+              value={contactFormData.fullName}
+              required
             />
             <input
               type="text"
               class="block border border-sage w-full p-3 rounded mb-4"
               name="zipCode"
               placeholder="Zip Code"
+              onChange={handleInputChange}
+              value={contactFormData.zipCode}
+              required
             />
             <div className="flex gap-1">
               <input
@@ -91,17 +100,34 @@ const ContactCreateModal = (props) => {
                 class="block border border-sage w-full p-3 rounded mb-4"
                 name="eventTitle"
                 placeholder="Event Title"
+                onChange={handleInputChange}
+                value={contactFormData.eventTitle}
+                required
               />
               <input
                 type="text"
                 class="block border border-sage w-full p-3 rounded mb-4"
                 name="eventDate"
                 placeholder="Event Date"
+                onChange={handleInputChange}
+                value={contactFormData.eventDate}
+                required
               />
             </div>
           </div>
           <div className="p-2.5">
-            <button type="submit" className="" onClick={props.onClose}>
+            <button 
+              disabled={
+                !(
+                  contactFormData.fullName &&
+                  contactFormData.zipCode &&
+                  contactFormData.eventTitle &&
+                  contactFormData.eventDate
+                )
+              }
+              type="submit"
+              class="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
+            >
               Save Contact
             </button>
           </div>

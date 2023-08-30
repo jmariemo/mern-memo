@@ -36,16 +36,16 @@ export const ADD_USER = gql`
 
 export const ADD_CONTACT = gql`
   mutation AddContact(
-    $fullName: String!
-    $zipCode: String!
-    $eventTitle: String!
-    $eventDate: String!
+    $fullName: String!,
+    $zipCode: String!,
+    $eventTitle: String!,
+    $eventDate: String!,
   ) {
     addUser(
-      fullName: $fullName
-      zipCode: $zipCode
-      eventTitle: $eventTitle
-      eventDate: $eventDate
+      fullName: $fullName,
+      zipCode: $zipCode,
+      eventTitle: $eventTitle,
+      eventDate: $eventDate,
     ) 
     }
 `;

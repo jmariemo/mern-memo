@@ -42,8 +42,8 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route path="/profile" element={<UserProfile />} />
-            {/* <Route path="/contacts" element={<ContactCards />} /> */}
+            <Route path="/Profile" element={<UserProfile />} />
+            <Route path="/contacts" element={<ContactCards />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
           <Footer />
