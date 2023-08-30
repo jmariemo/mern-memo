@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
-const Event = require("./Event")
+// const Event = require("./Event")
 
 const contactSchema = new Schema({
   // User that the contact belongs to
@@ -9,11 +9,15 @@ const contactSchema = new Schema({
     ref: "User",
   },
   // Name of Contact
-  firstName: {
+  fullName: {
     type: String,
     required: true,
   },
-  lastName: {
+  eventTitle: {
+    type: String,
+    required: true,
+  },
+  eventDate: {
     type: String,
     required: true,
   },
@@ -22,12 +26,10 @@ const contactSchema = new Schema({
     required: true,
     required: true,
   },
-  savedEvents: [Event.schema],
+  
+  toJSON: {
+    virtuals: true,
   },
-  {
-    toJSON: {
-      virtuals: true,
-    },
   }
 );
 
