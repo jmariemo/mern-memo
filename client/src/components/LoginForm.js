@@ -55,7 +55,7 @@ const LoginForm = (props) => {
 
   return (
     <form
-      className="flex fixed left-0 right-0 top-0 mt-20 bottom-0 items-center justify-center bg-gradient-to-b from-white to-green/40"
+      className="max-w-full z-30 flex fixed left-0 right-0 top-0 mt-20 bottom-0 items-center justify-center bg-gradient-to-b from-white to-green/40"
       noValidate
       validated={"false"}
       onSubmit={handleFormSubmit}

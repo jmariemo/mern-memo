@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ContactCreateModal from "./contactCreateModal";
+import ContactCreateForm from "./ContactCreateForm";
 
 function GreetingSection() {
   const [show, setShow] = useState(false);
@@ -16,12 +16,12 @@ function GreetingSection() {
         you have X events this month, currently shipping from zipcode.
       </p>
       <button
-        className="bg-tangerine hover:bg-white text-white hover:text-tangerine hover:border hover:border-sage font-light py-1 px-3 m-3 rounded shadow-md"
+        className="bg-tangerine hover:bg-white text-white hover:text-tangerine font-light py-1 px-3 m-3 rounded shadow-md"
         onClick={() => setShow(true)}
       >
         Create New Contact
       </button>
-      <ContactCreateModal onClose={() => setShow(false)} show={show} />
+      <ContactCreateForm onClose={() => setShow(false)} show={show} />
     </div>
   );
 }

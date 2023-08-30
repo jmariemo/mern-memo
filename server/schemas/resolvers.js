@@ -1,4 +1,4 @@
-const { Login, User, Contact, Event } = require("../models");
+const { User, contactSchema, Event } = require("../models");
 // import { GraphQLScalarType, Kind } from "graphql";
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
@@ -27,6 +27,15 @@ const resolvers = {
 
   Mutation: {
     
+    addUser: async (parent, args) => {
+      console.log("args", args);
+      const user = await User.create(args);
+      console.log("user", user);
+
+      token = signToken(user);
+      return { token, user };
+    },
+
     loginUser: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
       if (!user) {
@@ -44,17 +53,19 @@ const resolvers = {
       return { token, user };
     },
 
-    addUser: async (parent, args) => {
-      console.log("args", args);
-      const user = await User.create(args);
-      console.log("user", user);
+    addContact: async (parent, { ContactDataInput }, context) => {
+      console.log("contactDataInput", { ContactDataInput })
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { savedBooks: ContactDataInput } }
+        );
 
-      token = signToken(user);
-      return { token, user };
+        return context.user;
+      }
+      throw new AuthenticationError("Please log back in.");
     },
-    addContact: async (parent, {}) => {
-      const contact = await Contact.create();
-    },
+
     removeContact: async (parent, {}) => {},
     addEvent: async (parent, {}) => {
       const event = await Event.create();

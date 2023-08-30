@@ -34,8 +34,21 @@ export const ADD_USER = gql`
   }
 `;
 
-
-// export const ADD_CONTACT = gql``;
+export const ADD_CONTACT = gql`
+mutation AddContact($input: ContactDataInput) {
+  addContact(input: $input) {
+    _id
+    userName
+    email
+    contactCount
+    savedContacts {
+      contactId
+      fullName
+      zipCode
+    }
+  }
+}
+`;
 
 // export const REMOVE_CONTACT = gql``;
 

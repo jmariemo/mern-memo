@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 const bcrypt = require("bcrypt");
-const Contact = require("./Contact");
+const contactSchema = require("./Contact");
 
 const userSchema = new Schema(
   {
@@ -24,7 +24,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    savedContacts: [Contact.schema],
+    savedContacts: [contactSchema],
   },
   {
     toJSON: {

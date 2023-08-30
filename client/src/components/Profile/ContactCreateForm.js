@@ -1,34 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useMutation } from "@apollo/client";
-import { ADD_USER } from "../utils/mutations";
-import Auth from "../utils/auth";
+import Auth from "../../utils/auth";
+import { saveContactIds, getSavedContactIds } from "../../utils/localStorage";
+import { ADD_CONTACT } from "../../utils/mutations";
 
-const SignUpForm = (props) => {
+const ContactCreateForm = (props) => {
   // set initial form state
-  const [userFormData, setUserFormData] = useState({
-    userName: "",
+  const [contactFormData, setContactFormData] = useState({
+    fullName: "",
     zipCode: "",
-    email: "",
-    password: "",
   });
+
   // set state for form validation
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
-  const [addUser, { error }] = useMutation(ADD_USER);
+  const [addContact, { error }] = useMutation(ADD_CONTACT);
+  // create state to hold saved contactId values
+  const [savedContactIds, setSavedContactIds] = useState(getSavedContactIds());
+
+  // set up useEffect hook to save `savedContactIds` list to localStorage on component unmount
+  // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
+  useEffect(() => {
+    return () => saveContactIds(savedContactIds);
+  });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
+    setContactFormData({ ...contactFormData, [name]: value });
   };
 
   if (!props.show) {
     return null;
   }
 
-  const handleFormSubmit = async (event) => {
+  const handleSaveContact = async (event) => {
     event.preventDefault();
 
     const form = event.currentTarget;
@@ -37,28 +45,30 @@ const SignUpForm = (props) => {
       event.stopPropagation();
     }
 
+    // get token
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
+
     try {
-      const response = await addUser({
-        variables: { ...userFormData },
+      const response = await addContact({
+        variables: { ...contactFormData },
       });
 
       if (!response.data) {
         throw new Error(
-          "Hmm, something's not quite right. Please try to sign up again!"
+          "Hmm, something's not quite right. Please try to add contact again!"
         );
       }
-
-      Auth.login(response.data.addUser.token);
     } catch (err) {
       console.error(err);
-      setShowAlert(true);
     }
 
-    setUserFormData({
-      userName: "",
+    setContactFormData({
+      fullName: "",
       zipCode: "",
-      email: "",
-      password: "",
     });
   };
 
@@ -67,7 +77,7 @@ const SignUpForm = (props) => {
       className="max-w-full z-30 flex fixed left-0 right-0 top-0 mt-20 bottom-0 items-center justify-center bg-gradient-to-b from-white to-green/40"
       noValidate
       validated={"false"}
-      onSubmit={handleFormSubmit}
+      onSubmit={handleSaveContact}
       onClick={props.onClose}
     >
       <div class="flex flex-col">
@@ -76,15 +86,15 @@ const SignUpForm = (props) => {
           onClick={(e) => e.stopPropagation()}
         >
           <div class="px-6 py-8 rounded shadow-md shadow-sage text-black w-full bg-white">
-            <h1 htmlFor="username" class="mb-8 text-3xl text-center text-sage">
-              Sign Up
+            <h1 htmlFor="fullName" class="mb-8 text-3xl text-center text-sage">
+              Create Contact
             </h1>
             <input
               type="text"
-              placeholder="Username"
-              name="userName"
+              placeholder="Full Name"
+              name="fullName"
               onChange={handleInputChange}
-              value={userFormData.userName}
+              value={contactFormData.fullName}
               required
               class="block border border-sage w-full p-3 rounded mb-4"
             />
@@ -93,41 +103,16 @@ const SignUpForm = (props) => {
               placeholder="Zip Code"
               name="zipCode"
               onChange={handleInputChange}
-              value={userFormData.zipCode}
-              required
-              class="block border border-sage w-full p-3 rounded mb-4"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              name="email"
-              onChange={handleInputChange}
-              value={userFormData.email}
-              required
-              class="block border border-sage w-full p-3 rounded mb-4"
-            />
-            <input
-              type="password"
-              placeholder="password"
-              name="password"
-              onChange={handleInputChange}
-              value={userFormData.password}
+              value={contactFormData.zipCode}
               required
               class="block border border-sage w-full p-3 rounded mb-4"
             />
             <button
-              disabled={
-                !(
-                  userFormData.userName &&
-                  userFormData.zipCode &&
-                  userFormData.email &&
-                  userFormData.password
-                )
-              }
+              disabled={!(contactFormData.fullName && contactFormData.zipCode)}
               type="submit"
               class="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
             >
-              Create Account
+              Create Contact
             </button>
           </div>
         </div>
@@ -136,5 +121,4 @@ const SignUpForm = (props) => {
   );
 };
 
-export default SignUpForm;
-
+export default ContactCreateForm;

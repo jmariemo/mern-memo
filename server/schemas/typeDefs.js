@@ -13,12 +13,9 @@ type User {
 }
 
 type Contact {
-    contactId: ID!
-    firstName: String!
-    lastName: String!
-    zipCode: Int!
-    eventCount: Int
-    savedEvents: [Event]
+    contactId: String!
+    fullName: String!
+    zipCode: String!
 }
 
 type Event {
@@ -37,10 +34,9 @@ type Query {
 }
 
 input ContactDataInput {
-    contactId: ID!
-    firstName: String!
-    lastName: String!
-    zipCode: Int!
+    contactId: String!
+    fullName: String!
+    zipCode: String!
     eventCount: Int
     savedEvents: [String]
 }
