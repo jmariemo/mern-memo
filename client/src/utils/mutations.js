@@ -34,6 +34,21 @@ export const ADD_USER = gql`
   }
 `;
 
+export const ADD_CONTACT = gql`
+  mutation AddContact(
+    $fullName: String!,
+    $zipCode: String!,
+    $eventTitle: String!,
+    $eventDate: String!,
+  ) {
+    addContact(
+      fullName: $fullName,
+      zipCode: $zipCode,
+      eventTitle: $eventTitle,
+      eventDate: $eventDate,
+    ) 
+    }
+`;
 
 // export const ADD_CONTACT = gql``;
 
