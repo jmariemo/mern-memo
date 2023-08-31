@@ -50,7 +50,7 @@ const ContactCreateForm = (props) => {
         variables: { ...contactFormData },
       });
     } catch (err) {
-      console.error(err);
+      console.error();
     }
 
     setContactFormData({
