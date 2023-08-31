@@ -17,16 +17,11 @@ export const QUERY_USER = gql`
 `;
 
 export const QUERY_CONTACTS = gql`
-  query getContacts {
+  query addContact {
     contacts {
       _id
       contactName
       contactZipCode
-      events {
-        _id
-        eventName
-        eventZipCode
-      }
     }
   }
 `;

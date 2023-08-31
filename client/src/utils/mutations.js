@@ -40,8 +40,6 @@ mutation AddContact($contactName: String!, $contactZipCode: String!) {
     _id
     contactName
     contactZipCode
-      eventName
-      eventDate
   }
 }
 `;
