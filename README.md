@@ -1,10 +1,51 @@
 # Memo | Shipment Reminder App
 
-## Description 
-## Technologies Used 
-## App Preview 
-## Deployed application 
+## Description
+`Memo` is a MERN-stack single-page application to help users create gift-sending reminders to their friends & families. Users are able to create a "memo" that helps remind them the best time to gifts over to their loved ones so that the gifts arrive on time for their special events. They are able to keep track of these special moments with a simple reminder memo form on the application. 
 
+# Table of Contents
+
+- [Installation](#installation)
+- [Technologies Used](#technologies-used)
+- [Usage](#usage)
+- [Preview](#preview)
+- [License](#license)
+
+## Installation
+
+### `npm i` 
+Installs necessary packages that the application depends on.
+
+### `npm run develop` 
+Runs the app in the development mode. <br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+## Technologies Used 
+Node.js, Express.Js
+React
+MongoDB
+GraphQL 
+Heroku Web Server
+
+## Deployed application 
+Application GITHUB URL:
+https://github.com/jmariemo/mern-memo
+
+Deployed Application Link on Heroku
+https://mern-memo-39a8cf70bfe9.herokuapp.com/
+
+
+## Usage
+This website allows users to create memos to help remind them when to send gifts to their loved ones, so that the gift will arrive to them on time. 
+ 
+## Preview
+
+Screenshot located in `./client/` folder.
+![mern-memo](./client/build/screenshot.png)
+
+## License 
+
+Please refer to the LICENSE in the repo.
 <!-- steps to get going:
 1. npm i & add .gitignore for node_modules
 2. install any additional necessary dependencies
