@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const ContactList = ({ contacts }) => {
   if (!contacts.length) {
-    return <h3>Get started by adding your first contact</h3>;
+    return <h3 className="text-center text-green">Get started by adding your first contact</h3>;
   }
 
   return (
