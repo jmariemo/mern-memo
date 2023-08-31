@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
@@ -10,11 +9,6 @@ const LoginForm = (props) => {
     email: "",
     password: "",
   });
-
-  // set state for form validation
-  const [validated] = useState(false);
-  // set state for alert
-  const [showAlert, setShowAlert] = useState(false);
 
   const [loginUser, { error }] = useMutation(LOGIN_USER);
 
@@ -44,7 +38,6 @@ const LoginForm = (props) => {
       Auth.login(response.data.loginUser.token);
     } catch (err) {
       console.error(err);
-      setShowAlert(true);
     }
 
     setUserFormData({

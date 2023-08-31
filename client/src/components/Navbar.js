@@ -31,6 +31,12 @@ const AppNavbar = () => {
                 >
                   Logout
                 </button>
+                <a
+                  className="bg-tangerine hover:bg-white text-white hover:text-tangerine border-tangerine font-light py-1 px-3 m-3 rounded shadow-md"
+                  href="/profile"
+                >
+                  Profile
+                </a>
               </>
             ) : (
               <div>

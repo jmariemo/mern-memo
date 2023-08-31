@@ -1,24 +1,28 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
-// const Event = require("./Event")
+const { Schema, model } = require("mongoose");
+const dateFormat = require("mongoose-date-format");
 
 const contactSchema = new Schema({
-  // Name of Contact
-  fullName: {
-    type: String,
-    required: true
-  },
-  zipCode: {
+  contactName: {
     type: String,
     required: true,
-  }
-  // savedEvents: [Event.schema],
-  // },
-  // {
-  //   toJSON: {
-  //     virtuals: true,
-  //   },
-  }
-);
+  },
+  contactZipCode: {
+    type: String,
+    required: true,
+  },
+  events: [
+    {
+      eventName: {
+        type: String,
+      },
+      eventDate: {
+        type: Date,
+        default: new Date(),
+      },
+    },
+  ],
+});
 
-module.exports = contactSchema;
+const Contact = model("Contact", contactSchema)
+
+module.exports = Contact;

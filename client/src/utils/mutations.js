@@ -1,27 +1,15 @@
 import { gql } from "@apollo/client";
 
-export const LOGIN_USER = gql`
-  mutation Login($email: String!, $password: String!) {
-    loginUser(email: $email, password: $password) {
-      token
-      user {
-        _id
-        userName
-      }
-    }
-  }
-`;
-
 export const ADD_USER = gql`
   mutation AddUser(
     $userName: String!
-    $zipCode: String!
+    $userZipCode: String!
     $email: String!
     $password: String!
   ) {
     addUser(
       userName: $userName
-      zipCode: $zipCode
+      userZipCode: $userZipCode
       email: $email
       password: $password
     ) {
@@ -34,25 +22,46 @@ export const ADD_USER = gql`
   }
 `;
 
+export const LOGIN_USER = gql`
+  mutation Login($email: String!, $password: String!) {
+    loginUser(email: $email, password: $password) {
+      token
+      user {
+        _id
+        userName
+      }
+    }
+  }
+`;
+
 export const ADD_CONTACT = gql`
-mutation AddContact($input: ContactDataInput) {
-  addContact(input: $input) {
+mutation AddContact($contactName: String!, $contactZipCode: String!) {
+  addContact(contactName: $contactName, contactZipCode: $contactZipCode) {
     _id
-    userName
-    email
-    contactCount
-    savedContacts {
-      contactId
-      fullName
-      zipCode
+    contactName
+    contactZipCode
+    events {
+      _id
+      eventName
+      eventDate
     }
   }
 }
 `;
 
-// export const REMOVE_CONTACT = gql``;
+export const ADD_EVENT = gql`
+mutation AddEvent($contactId: ID!, $eventName: String!, $eventDate: String!) {
+  addEvent(contactId: $contactId, eventName: $eventName, eventDate: $eventDate) {
+    _id
+    contactName
+    contactZipCode 
+    events {
+      _id
+      eventName
+      eventDate
+    }
+  }
+}
+`;
 
-// export const ADD_EVENT = gql``;
-
-// export const REMOVE_EVENT = gql``;
 
