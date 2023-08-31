@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Landing from "./pages/Landing";
 import UserProfile from "./pages/UserProfile";
-import ContactCards from "./pages/ContactCardsModal";
+import SingleContact from "./pages/SingleContact";
 import PageNotFound from "./pages/PageNotFound";
 import Footer from "./components/Footer/Footer";
 import {
@@ -39,14 +39,17 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/profile" element={<UserProfile />} />
-            {/* <Route path="/contacts" element={<ContactCards />} /> */}
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
-          <Footer />
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/profiles/:userName" element={<UserProfile />} />
+          <Route path="/me" element={<UserProfile />} />
+          <Route path="/contacts/:contactId" element={<SingleContact />} />
+          {/* <Route path="/contacts" element={<ContactCards />} /> */}
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+        <Footer />
       </Router>
     </ApolloProvider>
   );

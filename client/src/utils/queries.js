@@ -22,6 +22,11 @@ export const QUERY_CONTACTS = gql`
       _id
       contactName
       contactZipCode
+      events {
+        _id
+        eventName
+        eventZipCode
+      }
     }
   }
 `;
