@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 
 import { ADD_CONTACT } from "../../../utils/mutations";
@@ -8,7 +8,7 @@ const ContactCreateForm = (props) => {
   // set initial form state
   const [contactFormData, setContactFormData] = useState({
     contactName: "",
-    contactZipCode: "",
+    contactZipCode: ""
   });
 
   const [addContact, { error }] = useMutation(ADD_CONTACT, {
@@ -94,24 +94,6 @@ const ContactCreateForm = (props) => {
               name="contactZipCode"
               onChange={handleInputChange}
               value={contactFormData.contactZipCode}
-              required
-              className="block border border-sage w-full p-3 rounded mb-4"
-            />
-            <input
-              type="text"
-              placeholder="Event Name"
-              name="eventName"
-              onChange={handleInputChange}
-              value={contactFormData.eventName}
-              required
-              className="block border border-sage w-full p-3 rounded mb-4"
-            />
-            <input
-              type="text"
-              placeholder="Event Date"
-              name="eventName"
-              onChange={handleInputChange}
-              value={contactFormData.eventName}
               required
               className="block border border-sage w-full p-3 rounded mb-4"
             />

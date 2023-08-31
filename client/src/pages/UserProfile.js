@@ -1,7 +1,10 @@
-import Auth from "../utils/auth";
+import React from 'react';
+
 import MonthSection from "../components/Profile/MonthSection";
-import ContactSection from "../components/Profile/ContactSection";
+import ContactList from "../components/Profile/ContactList";
 import GreetingSection from "../components/Profile/GreetingSection";
+
+import Auth from '../utils/auth';
 
 function UserProfile() {
   if (Auth.loggedIn()) {
@@ -11,7 +14,7 @@ function UserProfile() {
           <GreetingSection />
           <div>
             <MonthSection />
-            <ContactSection />
+            <ContactList contacts={user.contacts}/>
           </div>
         </div>
       </section>
