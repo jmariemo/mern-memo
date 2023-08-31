@@ -40,11 +40,8 @@ mutation AddContact($contactName: String!, $contactZipCode: String!) {
     _id
     contactName
     contactZipCode
-    events {
-      _id
       eventName
       eventDate
-    }
   }
 }
 `;
@@ -65,3 +62,8 @@ mutation AddEvent($contactId: ID!, $eventName: String!, $eventDate: String!) {
 `;
 
 
+// events {
+//   _id
+//   eventName
+//   eventDate
+// }
