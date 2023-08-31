@@ -1,22 +1,20 @@
-const mongoose = require ('mongoose');
-const { Schema, model } = mongoose; 
-const contactSchema = require("./Contact")
-
+const { Schema, model } = require("mongoose");
+const dateFormat = require("mongoose-date-format");
 
 const eventSchema = new Schema({
-  // the contact card
-  contact: [contactSchema],
-  // name of event
   eventName: {
-      type: String,
-      required: true, 
-  }, 
-  date: {
-      type: Date, 
-      required: true,
+    type: String,
+    required: true,
+  },
+  eventDate: {
+    type: Date,
+    default: new Date(),
+    required: true,
   },
 });
 
-const Event = model('Event', eventSchema );
+eventSchema.plugin(dateFormat);
+
+const Event = model("Event", eventSchema);
 
 module.exports = Event;

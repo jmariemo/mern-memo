@@ -13,7 +13,7 @@ module.exports = {
       fontFamily:{
         "display": "Unbounded",
         "sans": "Raleway"
-      }
+      },
     },
   },
   plugins: [

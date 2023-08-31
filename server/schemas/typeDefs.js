@@ -1,64 +1,53 @@
-const { gql } = require('apollo-server-express');
-// scalar Date
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-
-type User {
-    _id: ID!
+  type User {
+    _id: ID
     userName: String!
-    zipCode: String!
+    userZipCode: String!
     email: String!
-    contactCount: Int
-    savedContacts: [Contact]
-}
+    password: String!
+    contacts: [Contact]!
+  }
 
-type Contact {
-    contactId: ID!
-    firstName: String!
-    lastName: String!
-    zipCode: Int!
-    eventCount: Int
-    savedEvents: [Event]
-}
+  type Contact {
+    _id: ID
+    contactName: String!
+    contactZipCode: String!
+  }
 
-type Event {
-    contact: Contact
+  type Event {
+    _id: ID
     eventName: String!
     eventDate: String!
-}
+  }
 
-type Auth {
+  type Auth {
     token: ID!
     user: User
-}
+  }
 
-type Query {
+  type Query {
+    users: [User]
+    user(username: String!): User
+    contacts(username: String): [Contact]
+    contact(contactId: ID!): Contact
     me: User
-}
+  }
 
-input ContactDataInput {
-    contactId: ID!
-    firstName: String!
-    lastName: String!
-    zipCode: Int!
-    eventCount: Int
-    savedEvents: [String]
-}
-
-input EventDataInput {
-    contact: [String]
-    eventName: String!
-    eventDate: String!
-}
-
-type Mutation {
+  type Mutation {
+    addUser(
+      userName: String!
+      userZipCode: String!
+      email: String!
+      password: String!
+    ): Auth
     loginUser(email: String!, password: String!): Auth
-    addUser(userName: String!, zipCode: String!, email: String!, password: String!): Auth
-    addContact(input: ContactDataInput): User
-    removeContact(contactId: ID!): User
-    addEvent(input: EventDataInput): Contact
-    removeEvent(eventId: ID!): Contact
-}
+    addContact(contactName: String!, contactZipCode: String!): Contact
+    addEvent(contactId: ID!, eventName: String!, eventDate: String!): Contact
+    removeContact(contactId: ID!): Contact
+    removeEvent(contactId: ID!, eventId: ID!): Contact
+  }
 `;
 
 //export typeDefs

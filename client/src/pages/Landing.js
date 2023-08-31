@@ -3,7 +3,7 @@ import React from "react";
 function Landing() {
   return (
     <section id="landing">
-      <div className="container mx-auto flex px-10 py-20 md:flex-row flex-col items-center">
+      <div className="container mx-auto flex px-10 pt-20 pb-10 md:flex-row flex-col items-center">
         <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
           <h3 className="mb-2 leading-relaxed ">Anniversaries, birthdays...</h3>
           <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-tangerine font-display">
@@ -21,27 +21,31 @@ function Landing() {
       </div>
       <section className="mb-5">
         <div className="flex flex-col items-center">
-          <div className="m-4 pt-6 pb-1 max-w-sm text-xl text-center text-black font-display">
+          <div className="mb-4 mx-2 pb-1 max-w-sm text-xl text-center text-black font-display">
             <a className="text-tangerine">memo</a> reminds you when to send
             meaningful messages & important items.
           </div>
-          <ol className="flex flex-col md:flex-row gap-6 m-4 p-4 list-decimal text-l">
-            <li className="bg-vanilla rounded shadow-md p-2">
+          <div className="flex flex-col md:flex-row gap-6 m-4 p-4 text-l">
+            <img className="max-w-[12%] md:max-h-9 -mb-10 -ml-3 md:-mr-10 md:-mt-2 z-10" src="./1.png" />
+            <div className="bg-vanilla rounded shadow-md pl-6 pr-2 py-1">
               memo assigns a ship zone to you, based on your zip code.
-            </li>
-            <li className="bg-vanilla rounded shadow-md p-2">
+            </div>
+            <img className="max-w-[12%] md:max-h-9 -mb-10 -ml-3 md:-mr-10 md:-mt-2 z-10" src="./2.png" />
+            <div className="bg-vanilla rounded shadow-md pl-6 pr-2 py-1">
               you add contacts with shipping addresses and important dates. memo
               will add ship zones to your contacts based on their zip codes.
-            </li>
-            <li className="bg-vanilla rounded shadow-md p-2">
+            </div>
+            <img className="max-w-[12%] md:max-h-9 -mb-10 -ml-3 md:-mr-10 md:-mt-2 z-10" src="./3.png" />
+            <div className="bg-vanilla rounded shadow-md pl-6 pr-2 py-1">
               memo reminds you when to send important items based on the
               difference between you & your contacts' ship zones.
-            </li>
-            <li className="bg-vanilla rounded shadow-md p-2">
+            </div>
+            <img className="max-w-[12%] md:max-h-9 -mb-10 -ml-3 md:-mr-10 md:-mt-2 z-10" src="./4.png" />
+            <div className="bg-vanilla rounded shadow-md pl-6 pr-2 py-1">
               your items arrive on time! (and your loved ones feel special that
               you finally remembered them)
-            </li>
-          </ol>
+            </div>
+          </div>
         </div>
       </section>
     </section>

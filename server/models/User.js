@@ -1,16 +1,14 @@
-
-const mongoose = require("mongoose");
-const { Schema, model } = mongoose;
+const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
-const Contact = require("./Contact");
 
 const userSchema = new Schema(
   {
     userName: {
       type: String,
       required: true,
+      unique: true,
     },
-    zipCode: {
+    userZipCode: {
       type: String,
       required: true,
     },
@@ -18,13 +16,18 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      match: [/.+@.+\..+/, "Must use a valid email address"],
+      match: [/.+@.+\..+/, "Please enter valid email address"],
     },
     password: {
       type: String,
       required: true,
     },
-    savedContacts: [Contact.schema],
+    contacts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Contact",
+      },
+    ],
   },
   {
     toJSON: {
@@ -46,10 +49,6 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-userSchema.virtual("contactCount").get(function () {
-  return this.contacts.length;
-});
-
-const User = model("User", userSchema)
+const User = model("User", userSchema);
 
 module.exports = User;

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
@@ -8,16 +7,12 @@ const SignUpForm = (props) => {
   // set initial form state
   const [userFormData, setUserFormData] = useState({
     userName: "",
-    zipCode: "",
+    userZipCode: "",
     email: "",
     password: "",
   });
-  // set state for form validation
-  const [validated] = useState(false);
-  // set state for alert
-  const [showAlert, setShowAlert] = useState(false);
 
-  const [addUser, { error }] = useMutation(ADD_USER);
+  const [addUser, { error, data }] = useMutation(ADD_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -30,7 +25,7 @@ const SignUpForm = (props) => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
+    console.log(userFormData)
     const form = event.currentTarget;
     if (form.checkValidity() === "false") {
       event.preventDefault();
@@ -51,22 +46,19 @@ const SignUpForm = (props) => {
       Auth.login(response.data.addUser.token);
     } catch (err) {
       console.error(err);
-      setShowAlert(true);
     }
 
     setUserFormData({
       userName: "",
-      zipCode: "",
+      userZipCode: "",
       email: "",
       password: "",
     });
   };
 
-  
-
   return (
     <form
-      className="flex fixed left-0 right-0 top-0 mt-20 bottom-0 items-center justify-center bg-gradient-to-b from-white to-green/40"
+      className="max-w-full z-30 flex fixed left-0 right-0 top-0 mt-20 bottom-0 items-center justify-center bg-gradient-to-b from-white to-green/40"
       noValidate
       validated={"false"}
       onSubmit={handleFormSubmit}
@@ -93,9 +85,9 @@ const SignUpForm = (props) => {
             <input
               type="text"
               placeholder="Zip Code"
-              name="zipCode"
+              name="userZipCode"
               onChange={handleInputChange}
-              value={userFormData.zipCode}
+              value={userFormData.userZipCode}
               required
               class="block border border-sage w-full p-3 rounded mb-4"
             />
@@ -121,7 +113,7 @@ const SignUpForm = (props) => {
               disabled={
                 !(
                   userFormData.userName &&
-                  userFormData.zipCode &&
+                  userFormData.userZipCode &&
                   userFormData.email &&
                   userFormData.password
                 )

@@ -1,4 +1,4 @@
-const { Login, User, Contact, Event } = require("../models");
+const { User, Contact } = require("../models");
 // import { GraphQLScalarType, Kind } from "graphql";
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
@@ -22,11 +22,39 @@ const resolvers = {
   //   }),
 
   Query: {
-    me: async (parent, args, context) => {},
+    users: async () => {
+      return User.find().populate("contacts");
+    },
+    user: async (parent, { username }) => {
+      return User.findOne({ username }).populate("contacts");
+    },
+    contacts: async (parent, { username }) => {
+      const params = username ? { username } : {};
+      return Contact.find(params);
+    },
+    contact: async (parent, { contactId }) => {
+      return Contact.findOne({ _id: contactId });
+    },
+    me: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id }).populate("contacts");
+      }
+      throw new AuthenticationError("Please log in.");
+    },
   },
 
   Mutation: {
-    
+    addUser: async (parent, { userName, userZipCode, email, password }) => {
+      const user = await User.create({
+        userName,
+        userZipCode,
+        email,
+        password,
+      });
+      const token = signToken(user);
+      return { token, user };
+    },
+
     loginUser: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
       if (!user) {
@@ -44,22 +72,73 @@ const resolvers = {
       return { token, user };
     },
 
-    addUser: async (parent, args) => {
-      console.log("args", args);
-      const user = await User.create(args);
-      console.log("user", user);
+    addContact: async (parent, { contactName, contactZipCode }, context) => {
+      if (context.user) {
+        const contact = await Contact.create({
+          contactName,
+          contactZipCode,
+        });
 
-      token = signToken(user);
-      return { token, user };
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { contact: contact._id } }
+        );
+
+        return contact;
+      }
+      throw new AuthenticationError("Please log in.");
     },
-    addContact: async (parent, {}) => {
-      const contact = await Contact.create();
+
+    addEvent: async (parent, { contactId, eventName, eventDate }, context) => {
+      if (context.user) {
+        return Contact.findOneAndUpdate(
+          { _id: contactId },
+          {
+            $addToSet: {
+              events: { eventName, eventDate },
+            },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+      }
+      throw new AuthenticationError("Please log in.");
     },
-    removeContact: async (parent, {}) => {},
-    addEvent: async (parent, {}) => {
-      const event = await Event.create();
+
+    removeContact: async (parent, { contactId }, context) => {
+      if (context.user) {
+        const contact = await Contact.findOneAndDelete({
+          _id: contactId,
+        });
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { contacts: contact._id } }
+        );
+
+        return contact;
+      }
+      throw new AuthenticationError("Please log in.");
     },
-    removeEvent: async (parent, {}) => {},
+
+    removeEvent: async (parent, { contactId, eventId }, context) => {
+      if (context.user) {
+        return Contact.findOneAndUpdate(
+          { _id: contactId },
+          {
+            $pull: {
+              events: {
+                _id: eventId,
+              },
+            },
+          },
+          { new: true }
+        );
+      }
+      throw new AuthenticationError("Please log in");
+    },
   },
 };
 
