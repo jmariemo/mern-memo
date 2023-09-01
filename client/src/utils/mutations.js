@@ -45,15 +45,18 @@ mutation AddContact($contactName: String!, $contactZipCode: String!) {
 `;
 
 export const ADD_EVENT = gql`
-  mutation AddEvent($contactId: ID!, $eventName: String!) {
-    addComment(contactId: $contactId, eventName: $eventName) {
+mutation AddEvent($contactId: ID!, $eventName: String!, $eventDate: String!) {
+  addEvent(contactId: $contactId, eventName: $eventName, eventDate: $eventDate) {
+    _id
+    contactName
+    contactZipCode 
+    events {
       _id
-      contactName
-      events {
-        eventName
-      }
+      eventName
+      eventDate
     }
   }
+}
 `;
 
 

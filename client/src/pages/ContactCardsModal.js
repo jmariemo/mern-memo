@@ -18,6 +18,25 @@ const ContactCardsModal = (props) => {
             name="fullName"
             placeholder="Full Name"
           />
+          <input
+            type="text"
+            class="block border border-sage w-full p-3 rounded mb-4"
+            name="zipCode"
+            placeholder="Zip Code"
+          />
+          <div className="flex gap-1">
+            <input
+              type="text"
+              class="block border border-sage w-full p-3 rounded mb-4"
+              name="eventTitle"
+              placeholder="Event Title"
+            />
+            <input
+              type="text"
+              class="block border border-sage w-full p-3 rounded mb-4"
+              name="eventDate"
+              placeholder="Event Date"
+            />
           </div>
         </div>
         <div className="p-2.5">

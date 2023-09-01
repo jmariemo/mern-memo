@@ -1,31 +1,28 @@
 const { Schema, model } = require("mongoose");
+const dateFormat = require("mongoose-date-format");
 
 const contactSchema = new Schema({
   contactName: {
     type: String,
-    required: "Please add name for contact",
-    minlength: 1,
-    maxlength: 50,
-    trim: true,
+    required: true,
   },
   contactZipCode: {
     type: String,
-    required: "Please add zip code for contact",
-    minlength: 1,
-    maxlength: 10,
+    required: true,
   },
   events: [
     {
       eventName: {
         type: String,
-        required: true,
-        minlength: 1,
-        maxlength: 50,
-      }
+      },
+      eventDate: {
+        type: Date,
+        default: new Date(),
+      },
     },
   ],
 });
 
-const Contact = model("Contact", contactSchema);
+const Contact = model("Contact", contactSchema)
 
 module.exports = Contact;
