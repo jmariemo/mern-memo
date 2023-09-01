@@ -1,17 +1,35 @@
-const { AuthenticationError } = require("apollo-server-express");
 const { User, Contact } = require("../models");
+// import { GraphQLScalarType, Kind } from "graphql";
+const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
+  //   Date: new GraphQLScalarType({
+  //     name: "Date",
+  //     description: "Date custom scalar type",
+  //     parseValue(value) {
+  //       return new Date(value); // value from the client
+  //     },
+  //     serialize(value) {
+  //       return value.getTime(); // value sent to the client
+  //     },
+  //     parseLiteral(ast) {
+  //       if (ast.kind === Kind.INT) {
+  //         return new Date(+ast.value); // ast value is always in string format
+  //       }
+  //       return null;
+  //     },
+  //   }),
+
   Query: {
     users: async () => {
       return User.find().populate("contacts");
     },
-    user: async (parent, { userName }) => {
-      return User.findOne({ userName }).populate("contacts");
+    user: async (parent, { username }) => {
+      return User.findOne({ username }).populate("contacts");
     },
-    contacts: async (parent, { userName }) => {
-      const params = userName ? { userName } : {};
+    contacts: async (parent, { username }) => {
+      const params = username ? { username } : {};
       return Contact.find(params);
     },
     contact: async (parent, { contactId }) => {
@@ -36,46 +54,48 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
 
+    loginUser: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
       if (!user) {
-        throw new AuthenticationError("No account yet. Please sign up!");
+        throw new AuthenticationError("No user found with this email address");
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError("Wrong info!");
+        throw new AuthenticationError("Incorrect credentials");
       }
 
       const token = signToken(user);
 
       return { token, user };
     },
+
     addContact: async (parent, { contactName, contactZipCode }, context) => {
       if (context.user) {
         const contact = await Contact.create({
           contactName,
-          contactZipCode
+          contactZipCode,
         });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { contacts: contact._id } }
+          { $addToSet: { contact: contact._id } }
         );
 
         return contact;
       }
       throw new AuthenticationError("Please log in.");
     },
-    addEvent: async (parent, { contactId, eventName }, context) => {
+
+    addEvent: async (parent, { contactId, eventName, eventDate }, context) => {
       if (context.user) {
         return Contact.findOneAndUpdate(
           { _id: contactId },
           {
             $addToSet: {
-              comments: { eventName },
+              events: { eventName, eventDate },
             },
           },
           {
@@ -86,6 +106,7 @@ const resolvers = {
       }
       throw new AuthenticationError("Please log in.");
     },
+
     removeContact: async (parent, { contactId }, context) => {
       if (context.user) {
         const contact = await Contact.findOneAndDelete({
@@ -101,6 +122,7 @@ const resolvers = {
       }
       throw new AuthenticationError("Please log in.");
     },
+
     removeEvent: async (parent, { contactId, eventId }, context) => {
       if (context.user) {
         return Contact.findOneAndUpdate(
@@ -115,7 +137,7 @@ const resolvers = {
           { new: true }
         );
       }
-      throw new AuthenticationError("Please log in.");
+      throw new AuthenticationError("Please log in");
     },
   },
 };
